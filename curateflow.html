@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CurateFlow - AI智能内容提炼与发布平台</title>
+    <title>CurateFlow - AI Content Repurposing for Social</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --primary: #6366f1;
@@ -500,6 +501,40 @@
             line-height: 1.6;
         }
 
+        .submitted-message {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+            border: 2px solid var(--success);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .submitted-message h3 {
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .submitted-message p {
+            color: var(--text-light);
+            margin: 0;
+        }
+
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -632,10 +667,10 @@
         <div class="nav-container">
             <div class="logo">CurateFlow</div>
             <div class="nav-links">
-                <!-- <a href="#features">功能</a>
-                <a href="#testimonials">评价</a>
-                <a href="#pricing">定价</a> -->
-                <!-- <a href="#" class="btn-primary">免费试用</a> -->
+                <!-- <a href="#features">Features</a>
+                <a href="#testimonials">Testimonials</a>
+                <a href="#pricing">Pricing</a> -->
+                <!-- <a href="#" class="btn-primary">Try Free</a> -->
             </div>
         </div>
     </nav>
@@ -643,62 +678,62 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>几分钟内将长文转化为爆款社交媒体图文</h1>
-            <p>不再为内容创作而烦恼！CurateFlow 通过 AI 智能读取您的长篇文章，自动提炼总结为精美的短篇图文，并一键发布到各大社交平台。</p>
+            <h1>Turn long-form articles into high-performing social posts in minutes</h1>
+            <p>Stop wrestling with content. CurateFlow reads your long-form articles with AI, distills the key ideas into short visual + written posts, and helps you share them across social platforms.</p>
             <div class="hero-buttons">
-                <a href="#" class="btn-primary" id="tryFreeBtn1">免费试用 →</a>
-                <a href="#features" class="btn-secondary">了解更多</a>
+                <a href="#" class="btn-primary" id="tryFreeBtn1">Try free →</a>
+                <a href="#features" class="btn-secondary">Learn more</a>
             </div>
         </div>
     </section>
 
     <!-- Trust Badge -->
     <section class="trust-badge">
-        <p>已有 <strong>5,000+</strong> 创作者使用，包括顶级 LinkedIn 创作者和影响力人士</p>
+        <p><strong>100+</strong> creators have joined our beta, including top LinkedIn creators & influencers</p>
     </section>
 
     <!-- Features Section -->
     <section class="features" id="features">
         <div class="section-header">
-            <h2>AI 驱动的智能内容创作引擎</h2>
-            <p>CurateFlow 将您的长篇文章、想法或任何内容转化为高互动性的社交媒体图文，通过 AI 驱动工具、数千个模板和自动化流程，一切尽在直观的平台中。</p>
+            <h2>An AI-powered engine for social-ready content</h2>
+            <p>CurateFlow turns your long-form articles, ideas, or any content into engaging social posts—using AI workflows, proven templates, and automation in one simple interface.</p>
         </div>
 
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">📚</div>
-                <h3>智能文章解析</h3>
-                <p>AI 自动读取长篇文章，理解核心观点，提取关键信息，无需手动整理。</p>
+                <h3>Smart article understanding</h3>
+                <p>AI reads long-form content, understands the thesis, and extracts the most important points—no manual outlining required.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">✂️</div>
-                <h3>精准内容提炼</h3>
-                <p>将冗长的文章浓缩为精华要点，保持原意同时提升可读性和吸引力。</p>
+                <h3>Precise summarization</h3>
+                <p>Condense lengthy articles into clear takeaways while keeping the original meaning—optimized for readability and engagement.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">🎨</div>
-                <h3>精美图文设计</h3>
-                <p>自动生成专业的图文设计，支持多种风格模板，让内容更具视觉冲击力。</p>
+                <h3>Beautiful visual design</h3>
+                <p>Generate professional, share-ready visuals with flexible styles and templates—so your content looks as good as it reads.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">🚀</div>
-                <h3>一键多平台发布</h3>
-                <p>支持 LinkedIn、微博、Twitter、Instagram 等主流平台，一键发布，节省时间。</p>
+                <h3>One-click publishing</h3>
+                <p>Publish to major platforms like LinkedIn, X (Twitter), Instagram, and more—save time and stay consistent.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">📊</div>
-                <h3>数据驱动优化</h3>
-                <p>分析内容表现，提供优化建议，持续提升您的社交媒体影响力。</p>
+                <h3>Data-driven iteration</h3>
+                <p>Track performance signals and get improvement suggestions to grow reach over time.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">⚡</div>
-                <h3>批量内容生成</h3>
-                <p>一次处理多篇文章，批量生成两周的内容计划，告别内容创作压力。</p>
+                <h3>Batch generation</h3>
+                <p>Process multiple articles at once and generate a two-week posting plan—without the burnout.</p>
             </div>
         </div>
     </section>
@@ -707,32 +742,32 @@
     <section class="comparison">
         <div class="comparison-content">
             <div class="section-header">
-                <h2>为什么不用 ChatGPT？</h2>
-                <p>因为 ChatGPT 不是为社交媒体而生的。<strong>我们是。</strong></p>
+                <h2>Why not just use ChatGPT?</h2>
+                <p>Because ChatGPT wasn’t built for social. <strong>We were.</strong></p>
             </div>
 
             <div class="comparison-grid">
                 <div class="comparison-card others">
                     <h3>🤖 ChatGPT</h3>
-                    <p style="margin-bottom: 1.5rem; color: var(--text-light);">通用 AI，适用于一切场景</p>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-light);">General-purpose AI for everything</p>
                     <ul class="comparison-list">
-                        <li>无社交媒体优化</li>
-                        <li>输出内容通用化</li>
-                        <li>无互动策略</li>
-                        <li>无法生成视觉设计</li>
-                        <li>无发布功能</li>
+                        <li>No platform-specific optimization</li>
+                        <li>Generic output</li>
+                        <li>No engagement strategy</li>
+                        <li>No integrated visual design</li>
+                        <li>No publishing workflow</li>
                     </ul>
                 </div>
 
                 <div class="comparison-card ours">
                     <h3>✨ CurateFlow</h3>
-                    <p style="margin-bottom: 1.5rem; color: var(--text-light);">专为社交媒体打造</p>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-light);">Built specifically for social</p>
                     <ul class="comparison-list">
-                        <li>匹配您的个人风格</li>
-                        <li>集成社交媒体生成器</li>
-                        <li>精准的受众触发与格式</li>
-                        <li>直接发布到平台</li>
-                        <li>发现热门内容趋势</li>
+                        <li>Matches your style</li>
+                        <li>Social post + carousel generators</li>
+                        <li>Audience triggers & formats that convert</li>
+                        <li>Direct publishing workflow</li>
+                        <li>Trend-aware ideas</li>
                     </ul>
                 </div>
             </div>
@@ -742,40 +777,40 @@
     <!-- Testimonials -->
     <section class="testimonials" id="testimonials">
         <div class="section-header">
-            <h2>深受个人品牌创作者喜爱</h2>
-            <p>我们本可以自夸，但我们的用户已经为我们发声了</p>
+            <h2>Loved by personal brands</h2>
+            <p>We could brag, but our users say it best.</p>
         </div>
 
         <div class="testimonials-grid">
             <div class="testimonial-card">
-                <p class="testimonial-text">"我已经使用 CurateFlow 几个月了，发现它非常适合构建我的社交媒体图片。即使技能有限，也能创建出专业外观的图片。"</p>
+                <p class="testimonial-text">“I’ve been using CurateFlow for a few months, and it’s amazing for building social visuals. You can create professional-looking posts even with minimal design skills.”</p>
                 <div class="testimonial-author">
-                    <div class="author-avatar">张</div>
+                    <div class="author-avatar">Z</div>
                     <div class="author-info">
-                        <h4>张明</h4>
-                        <p>内容营销专家</p>
+                        <h4>Ming Zhang</h4>
+                        <p>Content Marketing</p>
                     </div>
                 </div>
             </div>
 
             <div class="testimonial-card">
-                <p class="testimonial-text">"CurateFlow 是我 LinkedIn 必备工具。我用它来创建所有 LinkedIn 内容。它给了我设计超能力，每个人都问我的设计师是谁。"</p>
+                <p class="testimonial-text">“CurateFlow is a must-have for LinkedIn. I use it for all my posts. It gave me design superpowers—people keep asking who my designer is.”</p>
                 <div class="testimonial-author">
-                    <div class="author-avatar">李</div>
+                    <div class="author-avatar">L</div>
                     <div class="author-info">
-                        <h4>李华</h4>
-                        <p>增长营销 @ TechCorp</p>
+                        <h4>Hua Li</h4>
+                        <p>Growth Marketing @ TechCorp</p>
                     </div>
                 </div>
             </div>
 
             <div class="testimonial-card">
-                <p class="testimonial-text">"CurateFlow 在内容准备方面让我的个人品牌建设变得容易多了。我喜欢它如何自动校正和调整，使我的帖子看起来完美。它为我节省了大量时间和精力。"</p>
+                <p class="testimonial-text">“CurateFlow made my personal branding much easier. I love how it auto-adjusts the layout and polish—my posts look great, and it saves me tons of time.”</p>
                 <div class="testimonial-author">
-                    <div class="author-avatar">王</div>
+                    <div class="author-avatar">W</div>
                     <div class="author-info">
-                        <h4>王芳</h4>
-                        <p>品牌顾问</p>
+                        <h4>Fang Wang</h4>
+                        <p>Brand Consultant</p>
                     </div>
                 </div>
             </div>
@@ -784,23 +819,23 @@
 
     <!-- CTA Section -->
     <section class="cta-section">
-        <h2>创建驱动卓越结果的内容</h2>
-        <p>加入数千名创作者，轻松设计和发布内容，用 CurateFlow 提升您的个人品牌</p>
-        <a href="#" class="btn-secondary" style="background: white; color: var(--primary);" id="tryFreeBtn2">立即免费试用 →</a>
+        <h2>Create content that drives real results</h2>
+        <p>Join thousands of creators to design and publish faster—grow your personal brand with CurateFlow.</p>
+        <a href="#" class="btn-secondary" style="background: white; color: var(--primary);" id="tryFreeBtn2">Try free →</a>
     </section>
 
     <!-- Footer -->
     <footer>
         <!-- <div class="footer-links">
-            <a href="#">功能</a>
-            <a href="#">定价</a>
-            <a href="#">博客</a>
-            <a href="#">关于我们</a>
-            <a href="#">隐私政策</a>
-            <a href="#">服务条款</a>
-            <a href="#">联系我们</a>
+            <a href="#">Features</a>
+            <a href="#">Pricing</a>
+            <a href="#">Blog</a>
+            <a href="#">About</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Contact</a>
         </div> -->
-        <p style="opacity: 0.7;">© 2026 CurateFlow. 保留所有权利。</p>
+        <p style="opacity: 0.7;">© 2026 CurateFlow. All rights reserved.</p>
     </footer>
 
     <!-- Modal -->
@@ -808,27 +843,32 @@
         <div class="modal">
             <button class="modal-close" id="modalClose">&times;</button>
             <div class="modal-header">
-                <h2>免费试用</h2>
+                <h2>Try free</h2>
             </div>
             <div class="modal-tip">
-                <p><strong>💡 提示：</strong>功能即将推出，提交URL或者文字内容即可通过邮箱收到图文成果，每人限一篇。</p>
+                <p><strong>💡 Tip:</strong> Coming soon. Submit a URL or text and you’ll receive the generated visual + copy by email. One submission per person.</p>
+            </div>
+            <div class="submitted-message" id="submittedMessage" style="display: none;">
+                <div class="success-icon">✓</div>
+                <h3>You’re in!</h3>
+                <p>We’ll email you the result once it’s generated. Thanks for your patience.</p>
             </div>
             <form id="trialForm">
                 <div class="form-group">
-                    <label for="contentInput">内容输入（网址或任意文案）</label>
+                    <label for="contentInput">Input (URL or text)</label>
                     <textarea 
                         id="contentInput" 
                         name="content" 
-                        placeholder="请输入文章网址或直接粘贴文章内容..."
+                        placeholder="Paste an article URL or the full text here…"
                         minlength="10"
                         maxlength="10000"
                         required
                     ></textarea>
-                    <div class="char-count" id="charCount">0 / 10000 字（最少 10 字）</div>
-                    <div class="error-message" id="contentError">内容长度必须在 10-10000 字之间</div>
+                    <div class="char-count" id="charCount">0 / 10000 chars (min 10)</div>
+                    <div class="error-message" id="contentError">Content must be between 10 and 10,000 characters.</div>
                 </div>
                 <div class="form-group">
-                    <label for="emailInput">邮箱地址</label>
+                    <label for="emailInput">Email</label>
                     <input 
                         type="email" 
                         id="emailInput" 
@@ -836,17 +876,22 @@
                         placeholder="your@email.com"
                         required
                     >
-                    <div class="form-hint">生成内容将发送到这个邮箱</div>
-                    <div class="error-message" id="emailError">请输入有效的邮箱地址</div>
+                    <div class="form-hint">We’ll send the generated result to this email.</div>
+                    <div class="error-message" id="emailError">Please enter a valid email address.</div>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn-submit" id="submitBtn">提交</button>
+                    <button type="submit" class="btn-submit" id="submitBtn">Submit</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
+        // Initialize Supabase client
+        const supabaseUrl = 'https://ptdmetwmqvyksysccdxg.supabase.co';
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0ZG1ldHdtcXZ5a3N5c2NjZHhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg2NDE0NTUsImV4cCI6MjA4NDIxNzQ1NX0.Z6y-o8iUuZsOSVTfcPaPT8abOQ7HU5y5PZ1QM3zF2bc';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
+
         // Modal functionality
         const modalOverlay = document.getElementById('modalOverlay');
         const modalClose = document.getElementById('modalClose');
@@ -859,31 +904,78 @@
         const contentError = document.getElementById('contentError');
         const emailError = document.getElementById('emailError');
         const submitBtn = document.getElementById('submitBtn');
+        const submittedMessage = document.getElementById('submittedMessage');
+
+        // LocalStorage key
+        const STORAGE_KEY = 'curateflow_submission';
+
+        // Check if user has already submitted
+        function hasSubmitted() {
+            return localStorage.getItem(STORAGE_KEY) !== null;
+        }
+
+        // Save submission to localStorage
+        function saveSubmission(email) {
+            const submissionData = {
+                email: email,
+                submittedAt: new Date().toISOString()
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(submissionData));
+        }
 
         // Open modal
         function openModal() {
             modalOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
+            
+            // Check if already submitted
+            if (hasSubmitted()) {
+                showSubmittedState();
+            } else {
+                showFormState();
+            }
+        }
+
+        // Show submitted state
+        function showSubmittedState() {
+            submittedMessage.style.display = 'block';
+            trialForm.style.display = 'none';
+        }
+
+        // Show form state
+        function showFormState() {
+            submittedMessage.style.display = 'none';
+            trialForm.style.display = 'block';
         }
 
         // Close modal
         function closeModal() {
             modalOverlay.classList.remove('active');
             document.body.style.overflow = '';
-            // Reset form
-            trialForm.reset();
-            updateCharCount();
-            hideErrors();
+            // Reset form only if not submitted
+            if (!hasSubmitted()) {
+                trialForm.reset();
+                updateCharCount();
+                hideErrors();
+            }
         }
 
         // Event listeners
         tryFreeBtn1.addEventListener('click', (e) => {
             e.preventDefault();
+            if (hasSubmitted()) {
+                alert('You’ve already joined. We’ll email you the result once it’s generated.');
+                return;
+            }
             openModal();
         });
 
         tryFreeBtn2.addEventListener('click', (e) => {
             e.preventDefault();
+            if (hasSubmitted()) {
+                alert('You’ve already joined. We’ll email you the result once it’s generated.');
+                return;
+            }
             openModal();
         });
 
@@ -898,7 +990,7 @@
         // Character count update
         function updateCharCount() {
             const length = contentInput.value.length;
-            charCount.textContent = `${length} / 10000 字（最少 10 字）`;
+            charCount.textContent = `${length} / 10000 chars (min 10)`;
             
             if (length < 10 || length > 10000) {
                 charCount.classList.add('error');
@@ -945,7 +1037,7 @@
         }
 
         // Form submission
-        trialForm.addEventListener('submit', (e) => {
+        trialForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const isContentValid = validateContent();
@@ -954,16 +1046,38 @@
             if (isContentValid && isEmailValid) {
                 // Disable submit button
                 submitBtn.disabled = true;
-                submitBtn.textContent = '提交中...';
+                submitBtn.textContent = 'Submitting...';
                 
-                // Here you would normally send the data to your backend
-                // For now, we'll just show an alert
-                setTimeout(() => {
-                    alert('提交成功！我们会在内容生成后发送到您的邮箱。');
+                try {
+                    // Save data to Supabase
+                    const { data, error } = await supabaseClient
+                        .from('submissions')
+                        .insert([
+                            {
+                                email: emailInput.value.trim(),
+                                content: contentInput.value.trim(),
+                                created_at: new Date().toISOString()
+                            }
+                        ])
+                        .select();
+
+                    if (error) {
+                        throw error;
+                    }
+
+                    // Save to localStorage
+                    saveSubmission(emailInput.value.trim());
+
+                    // Success
+                    alert('Submitted! We’ll email you the result once it’s generated.');
                     closeModal();
+                } catch (error) {
+                    console.error('Error saving to Supabase:', error);
+                    alert('Submission failed. Please try again later. Error: ' + error.message);
+                } finally {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = '提交';
-                }, 1000);
+                    submitBtn.textContent = 'Submit';
+                }
             }
         });
 
