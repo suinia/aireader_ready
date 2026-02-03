@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CurateFlow - AI智能内容提炼与发布平台</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --bg: #ffffff;
+            --bg-light: #f9fafb;
+            --border: #e5e7eb;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Trust Badge */
+        .trust-badge {
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg-light);
+        }
+
+        .trust-badge p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Comparison Section */
+        .comparison {
+            padding: 6rem 2rem;
+            background: var(--bg-light);
+        }
+
+        .comparison-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .comparison-card {
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+        }
+
+        .comparison-card.ours {
+            border-color: var(--primary);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
+        }
+
+        .comparison-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .comparison-list {
+            list-style: none;
+        }
+
+        .comparison-list li {
+            padding: 0.75rem 0;
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+        }
+
+        .comparison-list li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .comparison-card.others .comparison-list li::before {
+            content: '✗';
+            color: #ef4444;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .testimonial-text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .author-info h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--bg-light);
+            color: var(--text);
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .modal-tip {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+
+        .modal-tip p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .form-group textarea,
+        .form-group input[type="email"] {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group textarea:focus,
+        .form-group input[type="email"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-group textarea.error,
+        .form-group input[type="email"].error {
+            border-color: #ef4444;
+        }
+
+        .char-count {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+            text-align: right;
+        }
+
+        .char-count.error {
+            color: #ef4444;
+        }
+
+        .form-hint {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        .form-actions {
+            margin-top: 2rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 4rem 1.5rem;
+            }
+
+            .features, .testimonials, .comparison {
+                padding: 4rem 1.5rem;
+            }
+
+            .modal {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+
+            .modal-overlay {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">CurateFlow</div>
+            <div class="nav-links">
+                <!-- <a href="#features">功能</a>
+                <a href="#testimonials">评价</a>
+                <a href="#pricing">定价</a> -->
+                <!-- <a href="#" class="btn-primary">免费试用</a> -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>几分钟内将长文转化为爆款社交媒体图文</h1>
+            <p>不再为内容创作而烦恼！CurateFlow 通过 AI 智能读取您的长篇文章，自动提炼总结为精美的短篇图文，并一键发布到各大社交平台。</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn-primary" id="tryFreeBtn1">免费试用 →</a>
+                <a href="#features" class="btn-secondary">了解更多</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badge -->
+    <section class="trust-badge">
+        <p>已有 <strong>5,000+</strong> 创作者使用，包括顶级 LinkedIn 创作者和影响力人士</p>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2>AI 驱动的智能内容创作引擎</h2>
+            <p>CurateFlow 将您的长篇文章、想法或任何内容转化为高互动性的社交媒体图文，通过 AI 驱动工具、数千个模板和自动化流程，一切尽在直观的平台中。</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>智能文章解析</h3>
+                <p>AI 自动读取长篇文章，理解核心观点，提取关键信息，无需手动整理。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">✂️</div>
+                <h3>精准内容提炼</h3>
+                <p>将冗长的文章浓缩为精华要点，保持原意同时提升可读性和吸引力。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>精美图文设计</h3>
+                <p>自动生成专业的图文设计，支持多种风格模板，让内容更具视觉冲击力。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>一键多平台发布</h3>
+                <p>支持 LinkedIn、微博、Twitter、Instagram 等主流平台，一键发布，节省时间。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>数据驱动优化</h3>
+                <p>分析内容表现，提供优化建议，持续提升您的社交媒体影响力。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>批量内容生成</h3>
+                <p>一次处理多篇文章，批量生成两周的内容计划，告别内容创作压力。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison">
+        <div class="comparison-content">
+            <div class="section-header">
+                <h2>为什么不用 ChatGPT？</h2>
+                <p>因为 ChatGPT 不是为社交媒体而生的。<strong>我们是。</strong></p>
+            </div>
+
+            <div class="comparison-grid">
+                <div class="comparison-card others">
+                    <h3>🤖 ChatGPT</h3>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-light);">通用 AI，适用于一切场景</p>
+                    <ul class="comparison-list">
+                        <li>无社交媒体优化</li>
+                        <li>输出内容通用化</li>
+                        <li>无互动策略</li>
+                        <li>无法生成视觉设计</li>
+                        <li>无发布功能</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-card ours">
+                    <h3>✨ CurateFlow</h3>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-light);">专为社交媒体打造</p>
+                    <ul class="comparison-list">
+                        <li>匹配您的个人风格</li>
+                        <li>集成社交媒体生成器</li>
+                        <li>精准的受众触发与格式</li>
+                        <li>直接发布到平台</li>
+                        <li>发现热门内容趋势</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-header">
+            <h2>深受个人品牌创作者喜爱</h2>
+            <p>我们本可以自夸，但我们的用户已经为我们发声了</p>
+        </div>
+
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text">"我已经使用 CurateFlow 几个月了，发现它非常适合构建我的社交媒体图片。即使技能有限，也能创建出专业外观的图片。"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">张</div>
+                    <div class="author-info">
+                        <h4>张明</h4>
+                        <p>内容营销专家</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <p class="testimonial-text">"CurateFlow 是我 LinkedIn 必备工具。我用它来创建所有 LinkedIn 内容。它给了我设计超能力，每个人都问我的设计师是谁。"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">李</div>
+                    <div class="author-info">
+                        <h4>李华</h4>
+                        <p>增长营销 @ TechCorp</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <p class="testimonial-text">"CurateFlow 在内容准备方面让我的个人品牌建设变得容易多了。我喜欢它如何自动校正和调整，使我的帖子看起来完美。它为我节省了大量时间和精力。"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">王</div>
+                    <div class="author-info">
+                        <h4>王芳</h4>
+                        <p>品牌顾问</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>创建驱动卓越结果的内容</h2>
+        <p>加入数千名创作者，轻松设计和发布内容，用 CurateFlow 提升您的个人品牌</p>
+        <a href="#" class="btn-secondary" style="background: white; color: var(--primary);" id="tryFreeBtn2">立即免费试用 →</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <!-- <div class="footer-links">
+            <a href="#">功能</a>
+            <a href="#">定价</a>
+            <a href="#">博客</a>
+            <a href="#">关于我们</a>
+            <a href="#">隐私政策</a>
+            <a href="#">服务条款</a>
+            <a href="#">联系我们</a>
+        </div> -->
+        <p style="opacity: 0.7;">© 2026 CurateFlow. 保留所有权利。</p>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-header">
+                <h2>免费试用</h2>
+            </div>
+            <div class="modal-tip">
+                <p><strong>💡 提示：</strong>功能即将推出，提交URL或者文字内容即可通过邮箱收到图文成果，每人限一篇。</p>
+            </div>
+            <form id="trialForm">
+                <div class="form-group">
+                    <label for="contentInput">内容输入（网址或任意文案）</label>
+                    <textarea 
+                        id="contentInput" 
+                        name="content" 
+                        placeholder="请输入文章网址或直接粘贴文章内容..."
+                        minlength="10"
+                        maxlength="10000"
+                        required
+                    ></textarea>
+                    <div class="char-count" id="charCount">0 / 10000 字（最少 10 字）</div>
+                    <div class="error-message" id="contentError">内容长度必须在 10-10000 字之间</div>
+                </div>
+                <div class="form-group">
+                    <label for="emailInput">邮箱地址</label>
+                    <input 
+                        type="email" 
+                        id="emailInput" 
+                        name="email" 
+                        placeholder="your@email.com"
+                        required
+                    >
+                    <div class="form-hint">生成内容将发送到这个邮箱</div>
+                    <div class="error-message" id="emailError">请输入有效的邮箱地址</div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit" id="submitBtn">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalClose = document.getElementById('modalClose');
+        const tryFreeBtn1 = document.getElementById('tryFreeBtn1');
+        const tryFreeBtn2 = document.getElementById('tryFreeBtn2');
+        const trialForm = document.getElementById('trialForm');
+        const contentInput = document.getElementById('contentInput');
+        const emailInput = document.getElementById('emailInput');
+        const charCount = document.getElementById('charCount');
+        const contentError = document.getElementById('contentError');
+        const emailError = document.getElementById('emailError');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Open modal
+        function openModal() {
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            // Reset form
+            trialForm.reset();
+            updateCharCount();
+            hideErrors();
+        }
+
+        // Event listeners
+        tryFreeBtn1.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal();
+        });
+
+        tryFreeBtn2.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal();
+        });
+
+        modalClose.addEventListener('click', closeModal);
+
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        // Character count update
+        function updateCharCount() {
+            const length = contentInput.value.length;
+            charCount.textContent = `${length} / 10000 字（最少 10 字）`;
+            
+            if (length < 10 || length > 10000) {
+                charCount.classList.add('error');
+            } else {
+                charCount.classList.remove('error');
+            }
+        }
+
+        contentInput.addEventListener('input', updateCharCount);
+
+        // Validation
+        function validateContent() {
+            const length = contentInput.value.trim().length;
+            if (length < 10 || length > 10000) {
+                contentInput.classList.add('error');
+                contentError.classList.add('show');
+                return false;
+            } else {
+                contentInput.classList.remove('error');
+                contentError.classList.remove('show');
+                return true;
+            }
+        }
+
+        function validateEmail() {
+            const email = emailInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                emailInput.classList.add('error');
+                emailError.classList.add('show');
+                return false;
+            } else {
+                emailInput.classList.remove('error');
+                emailError.classList.remove('show');
+                return true;
+            }
+        }
+
+        function hideErrors() {
+            contentInput.classList.remove('error');
+            emailInput.classList.remove('error');
+            contentError.classList.remove('show');
+            emailError.classList.remove('show');
+        }
+
+        // Form submission
+        trialForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const isContentValid = validateContent();
+            const isEmailValid = validateEmail();
+            
+            if (isContentValid && isEmailValid) {
+                // Disable submit button
+                submitBtn.disabled = true;
+                submitBtn.textContent = '提交中...';
+                
+                // Here you would normally send the data to your backend
+                // For now, we'll just show an alert
+                setTimeout(() => {
+                    alert('提交成功！我们会在内容生成后发送到您的邮箱。');
+                    closeModal();
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '提交';
+                }, 1000);
+            }
+        });
+
+        // Real-time validation
+        contentInput.addEventListener('blur', validateContent);
+        emailInput.addEventListener('blur', validateEmail);
+    </script>
+</body>
+</html>
